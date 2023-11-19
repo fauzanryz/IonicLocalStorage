@@ -1,0 +1,7 @@
+{
+  "name": "IonicLocalStorageExample",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
