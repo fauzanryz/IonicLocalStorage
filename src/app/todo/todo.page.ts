@@ -45,4 +45,10 @@ export class TodoPage {
       .then(() => this.loadTodos())
       .catch(error => console.error('Error clearing todos', error));
   }
+
+  saveTodoAndSync(taskName: string): void {
+    this.sqliteService.addTodoAndSync(taskName)
+      .then(() => console.log('Todo added and synced successfully'))
+      .catch(error => console.error('Error adding and syncing todo', error));
+  }
 }
