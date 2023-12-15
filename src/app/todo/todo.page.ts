@@ -4,7 +4,7 @@ import { SQLiteService } from '../services/sqlite.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'todo.page.html',
-  styleUrls: ['todo.page.scss']
+  styleUrls: ['todo.page.scss'],
 })
 export class TodoPage {
   todos: any[] = [];
@@ -29,26 +29,30 @@ export class TodoPage {
   }
 
   updateTodoStatus(id: number, completed: number): void {
-    this.sqliteService.updateTodoStatus(id, completed)
+    this.sqliteService
+      .updateTodoStatus(id, completed)
       .then(() => this.loadTodos())
-      .catch(error => console.error('Error updating todo status', error));
+      .catch((error) => console.error('Error updating todo status', error));
   }
 
   deleteTodo(id: number): void {
-    this.sqliteService.deleteTodo(id)
+    this.sqliteService
+      .deleteTodo(id)
       .then(() => this.loadTodos())
-      .catch(error => console.error('Error deleting todo', error));
+      .catch((error) => console.error('Error deleting todo', error));
   }
 
   clearTodos(): void {
-    this.sqliteService.clearTodos()
+    this.sqliteService
+      .clearTodos()
       .then(() => this.loadTodos())
-      .catch(error => console.error('Error clearing todos', error));
+      .catch((error) => console.error('Error clearing todos', error));
   }
 
   saveTodoAndSync(taskName: string): void {
-    this.sqliteService.addTodoAndSync(taskName)
+    this.sqliteService
+      .addTodoAndSync(taskName)
       .then(() => console.log('Todo added and synced successfully'))
-      .catch(error => console.error('Error adding and syncing todo', error));
+      .catch((error) => console.error('Error adding and syncing todo', error));
   }
 }
