@@ -25,7 +25,7 @@ export class SQLiteService {
 
   private async initializeDatabase(): Promise<void> {
     const dbOptions: capConnectionOptions = {
-      database: 'my-database',
+      database: 'todo_db',
       encrypted: false,
       mode: 'no-encryption',
       readonly: false,
@@ -34,7 +34,7 @@ export class SQLiteService {
     // Use this.db as a reference to CapacitorSQLite for executing queries
     this.db = CapacitorSQLite;
     this.db.createConnection(dbOptions);
-    this.db.open({ database: 'my-database', readonly: false });
+    this.db.open({ database: 'todo_db', readonly: false });
 
     await this.createTable();
   }
@@ -49,7 +49,7 @@ export class SQLiteService {
 
     // Use CapacitorSQLite for running queries
     await this.db.run({
-      database: 'my-database',
+      database: 'todo_db',
       statement: query,
       values: [],
     });
@@ -58,7 +58,7 @@ export class SQLiteService {
   async addTodo(taskName: string): Promise<void> {
     const query = 'INSERT INTO todo (task_name) VALUES (?)';
     await this.db.run({
-      database: 'my-database',
+      database: 'todo_db',
       statement: query,
       values: [taskName],
     });
@@ -67,7 +67,7 @@ export class SQLiteService {
   async getTodos(): Promise<any[]> {
     const query = 'SELECT * FROM todo';
     const result = await this.db.query({
-      database: 'my-database',
+      database: 'todo_db',
       statement: query,
       values: [],
     });
@@ -77,7 +77,7 @@ export class SQLiteService {
   async updateTodoStatus(id: number, completed: number): Promise<void> {
     const query = 'UPDATE todo SET completed = ? WHERE id = ?';
     await this.db.run({
-      database: 'my-database',
+      database: 'todo_db',
       statement: query,
       values: [completed, id],
     });
@@ -86,7 +86,7 @@ export class SQLiteService {
   async deleteTodo(id: number): Promise<void> {
     const query = 'DELETE FROM todo WHERE id = ?';
     await this.db.run({
-      database: 'my-database',
+      database: 'todo_db',
       statement: query,
       values: [id],
     });
@@ -95,7 +95,7 @@ export class SQLiteService {
   async clearTodos(): Promise<void> {
     const query = 'DELETE FROM todo';
     await this.db.run({
-      database: 'my-database',
+      database: 'todo_db',
       statement: query,
       values: [],
     });
