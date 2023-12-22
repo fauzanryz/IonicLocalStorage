@@ -18,7 +18,7 @@ export class SQLiteService {
   // untuk linux, gunakan perintah ifconfig
   //private apiUrl = '/todo';
   // jika menggunakan emulator, silahkan menggunakan localhost
-  private apiUrl = 'http://10.191.152.53/todo/api.php';
+  private apiUrl = 'http://172.22.2.57/todo/api.php';
   constructor(private http: HttpClient) {
     this.initializeDatabase();
   }
@@ -103,32 +103,27 @@ export class SQLiteService {
 
   async addTodoAndSync(taskName: string): Promise<void> {
     await this.addTodo(taskName); // Add to local SQLite database
-    await this.syncTodosNative(); // Sync with the remote API
+    await this.syncTodosNative(taskName); // Sync with the remote API
   }
 
-  private async syncTodosNative(): Promise<void> {
+  private async syncTodosNative(taskName: string): Promise<void> {
     const options = {
       url: this.apiUrl,
       headers: { 'Content-Type': 'application/json' },
     };
 
-    const todos = await this.getTodos(); // Get all local todos
-
-    // Send each todo to the API
-    for (const todo of todos) {
-      let payload = { task_name: todo.task_name };
-      const sendValue = {
-        ...options,
-        data: payload,
-      };
-      console.log('Syncing todo value:', JSON.stringify(payload));
-      const response = await CapacitorHttp.request({
-        ...sendValue,
-        method: 'POST',
-      });
-      console.log('Todo synced successfully');
-      console.log('response', response);
-    }
+    let payload = { task_name: taskName };
+    const sendValue = {
+      ...options,
+      data: payload,
+    };
+    console.log('Syncing todo value:', JSON.stringify(payload));
+    const response = await CapacitorHttp.request({
+      ...sendValue,
+      method: 'POST',
+    });
+    console.log('Todo synced successfully');
+    console.log('response', response);
   }
 
   private async syncTodos(): Promise<void> {
